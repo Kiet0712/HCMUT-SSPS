@@ -172,7 +172,6 @@ export function PrintDialog({ isOpen, onClose, file }: PrintDialogProps) {
 
           <div className="bg-gray-50 p-4 rounded-lg">
             <h3 className="font-medium mb-4">Preview</h3>
-            {/* <div className="aspect-[3/4] bg-white rounded-lg shadow-sm border">{file.preview}</div> */}
             <iframe src={file.preview} alt={file.preview} className='aspect-[3/4] rounded-lg shadow-sm border w-full' />
           </div>
         </div>

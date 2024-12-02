@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { LogOut, Printer, Receipt, ShoppingCart } from 'lucide-react'
+import { SlidersHorizontal, Printer, GraduationCap, NotepadText } from 'lucide-react'
 import Image from "next/image"
 import Link from "next/link"
 
@@ -19,24 +19,24 @@ import {
 
 const navigation = [
   {
-    title: "Print",
+    title: "Configuration",
+    icon: SlidersHorizontal,
+    href: "/admin/config",
+  },
+  {
+    title: "Printer Management",
     icon: Printer,
-    href: "/print",
+    href: "/admin/printer",
   },
   {
-    title: "Buy Printing Pages",
-    icon: ShoppingCart,
-    href: "/buy",
+    title: "Student Management",
+    icon: GraduationCap,
+    href: "/admin/student",
   },
   {
-    title: "View Printing Log",
-    icon: Receipt,
-    href: "/log",
-  },
-  {
-    title: "Logout",
-    icon: LogOut,
-    href: "/logout",
+    title: "Monthly Report",
+    icon: NotepadText,
+    href: "/admin/report",
   },
 ]
 
@@ -58,7 +58,7 @@ export function AppSidebar() {
             />
             {/* </div> */}
             <div className="flex flex-col gap-0.5">
-                <span className="font-semibold">SSPS-HCMUT</span>
+                <span className="font-semibold"><span className="text-blue-700">SSPS</span>-HCMUT</span>
                 <span className="text-xs">Student Smart Printing System</span>
             </div>
         </Link>
@@ -84,4 +84,3 @@ export function AppSidebar() {
     </Sidebar>
   )
 }
-

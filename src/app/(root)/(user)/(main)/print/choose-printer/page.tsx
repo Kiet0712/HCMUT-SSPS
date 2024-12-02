@@ -56,7 +56,9 @@ export default function ChoosePrinter() {
         ))}
       </div>
       <div className="flex justify-center mt-6">
+        <Link href="/print/upload-doc">
         <Button className="bg-blue-700">Confirm</Button>
+        </Link>
       </div>
     </div>
   );

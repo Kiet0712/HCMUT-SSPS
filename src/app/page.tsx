@@ -21,6 +21,9 @@ export default function Login() {
                             width={128}
                             height={128}
                             className="mb-16" />
+                        <div>
+                            <p className="text-muted-foreground font-bold mb-4">Choose Login Role</p>
+                        </div>
                         <div className="flex flex-row gap-8">
                             <Link href="/admin/sign-in">
                             <Card className="text-center py-8 px-16 bg-yellow-400 rounded-lg">

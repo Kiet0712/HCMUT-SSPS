@@ -98,7 +98,7 @@ export default function Signin () {
                             </Link>
                         </div>
 
-                        <Link href="/home">
+                        <Link href="/admin/home">
                         <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-500 my-4">
                                 Login
                             </Button>

@@ -105,7 +105,7 @@ export function FileUpload() {
       </div>
 
       {files.length > 0 && (
-        <Button className="mt-6 w-24" size="lg">
+        <Button className="mt-6 w-24 bg-blue-700" size="lg">
           Print
         </Button>
       )}

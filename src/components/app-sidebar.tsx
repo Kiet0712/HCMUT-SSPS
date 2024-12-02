@@ -15,6 +15,8 @@ import {
   SidebarRail,
 } from "@/components/ui/sidebar"
 
+// import { Logo } from '@/components/logo'
+
 const navigation = [
   {
     title: "Print",
@@ -45,21 +47,21 @@ export function AppSidebar() {
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton size="lg" asChild>
-              <Link href="/">
-                {/* <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-secondary text-primary-foreground"> */}
-                  <Image
-                    src="/logo_hcmut.png"
-                    alt="SSPS Logo"
-                    width={40}
-                    height={40}
-                    className="m-0 p-0"
-                  />
-                {/* </div> */}
-                <div className="flex flex-col gap-0.5">
-                  <span className="font-semibold">SSPS-HCMUT</span>
-                  <span className="text-xs">Student Smart Printing System</span>
-                </div>
-              </Link>
+              {/* <Logo /> */}
+              <Link className="flex flex-row gap-2" href="/home">
+            <Image
+                src="/logo_hcmut.png"
+                alt="SSPS Logo"
+                width={40}
+                height={40}
+                className="m-0 p-0"
+            />
+            {/* </div> */}
+            <div className="flex flex-col gap-0.5">
+                <span className="font-semibold">SSPS-HCMUT</span>
+                <span className="text-xs">Student Smart Printing System</span>
+            </div>
+        </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>

@@ -14,4 +14,3 @@ export interface PrintDialogProps {
   onClose: () => void
   file: File & { id: string }
 }
-

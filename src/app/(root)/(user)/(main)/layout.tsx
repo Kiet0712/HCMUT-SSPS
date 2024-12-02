@@ -26,7 +26,7 @@ export default function RootLayout({
                             <a href="#">Home</a>
                         </Button>
                         <Button variant="link" asChild>
-                            <a href="#">About Us</a>
+                            <a href="#">About</a>
                         </Button>
                         <Button variant="link" asChild>
                             <a href="#">Contact</a>

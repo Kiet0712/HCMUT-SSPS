@@ -38,7 +38,7 @@ export function PrintDialog({ isOpen, onClose, file }: PrintDialogProps) {
         <DialogHeader>
           <DialogTitle>Document</DialogTitle>
         </DialogHeader>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="space-y-6">
             <div>
@@ -49,7 +49,7 @@ export function PrintDialog({ isOpen, onClose, file }: PrintDialogProps) {
               <h3 className="font-medium">Page Range</h3>
               <RadioGroup
                 value={settings.pageRange}
-                onValueChange={(value: 'all' | 'select') => 
+                onValueChange={(value: 'all' | 'select') =>
                   setSettings(prev => ({ ...prev, pageRange: value }))}
               >
                 <div className="flex items-center space-x-2">
@@ -61,16 +61,16 @@ export function PrintDialog({ isOpen, onClose, file }: PrintDialogProps) {
                   <Label htmlFor="select">Select Pages</Label>
                 </div>
               </RadioGroup>
-              
+
               {settings.pageRange === 'select' && (
                 <div className="flex items-center gap-2 ml-6">
                   <Input
                     type="number"
                     min={1}
                     value={settings.startPage}
-                    onChange={(e) => setSettings(prev => ({ 
-                      ...prev, 
-                      startPage: parseInt(e.target.value) || 1 
+                    onChange={(e) => setSettings(prev => ({
+                      ...prev,
+                      startPage: parseInt(e.target.value) || 1
                     }))}
                     className="w-20"
                   />
@@ -79,9 +79,9 @@ export function PrintDialog({ isOpen, onClose, file }: PrintDialogProps) {
                     type="number"
                     min={1}
                     value={settings.endPage}
-                    onChange={(e) => setSettings(prev => ({ 
-                      ...prev, 
-                      endPage: parseInt(e.target.value) || 1 
+                    onChange={(e) => setSettings(prev => ({
+                      ...prev,
+                      endPage: parseInt(e.target.value) || 1
                     }))}
                     className="w-20"
                   />
@@ -96,9 +96,9 @@ export function PrintDialog({ isOpen, onClose, file }: PrintDialogProps) {
                 type="number"
                 min={1}
                 value={settings.copies}
-                onChange={(e) => setSettings(prev => ({ 
-                  ...prev, 
-                  copies: parseInt(e.target.value) || 1 
+                onChange={(e) => setSettings(prev => ({
+                  ...prev,
+                  copies: parseInt(e.target.value) || 1
                 }))}
                 className="w-20"
               />
@@ -111,7 +111,7 @@ export function PrintDialog({ isOpen, onClose, file }: PrintDialogProps) {
                   <Checkbox
                     id="grayscale"
                     checked={settings.grayscale}
-                    onCheckedChange={(checked) => 
+                    onCheckedChange={(checked) =>
                       setSettings(prev => ({ ...prev, grayscale: checked as boolean }))}
                   />
                   <Label htmlFor="grayscale">Print in Grayscale</Label>
@@ -120,7 +120,7 @@ export function PrintDialog({ isOpen, onClose, file }: PrintDialogProps) {
                   <Checkbox
                     id="double-sided"
                     checked={settings.doubleSided}
-                    onCheckedChange={(checked) => 
+                    onCheckedChange={(checked) =>
                       setSettings(prev => ({ ...prev, doubleSided: checked as boolean }))}
                   />
                   <Label htmlFor="double-sided">Use Double-side Printing</Label>
@@ -136,7 +136,7 @@ export function PrintDialog({ isOpen, onClose, file }: PrintDialogProps) {
                     <Label htmlFor="layout">Layout:</Label>
                     <Select
                       value={settings.layout}
-                      onValueChange={(value) => 
+                      onValueChange={(value) =>
                         setSettings(prev => ({ ...prev, layout: value }))}
                     >
                       <SelectTrigger>
@@ -152,7 +152,7 @@ export function PrintDialog({ isOpen, onClose, file }: PrintDialogProps) {
                     <Label htmlFor="pagesize">Page size:</Label>
                     <Select
                       value={settings.pageSize}
-                      onValueChange={(value) => 
+                      onValueChange={(value) =>
                         setSettings(prev => ({ ...prev, pageSize: value }))}
                     >
                       <SelectTrigger>
@@ -172,7 +172,8 @@ export function PrintDialog({ isOpen, onClose, file }: PrintDialogProps) {
 
           <div className="bg-gray-50 p-4 rounded-lg">
             <h3 className="font-medium mb-4">Preview</h3>
-            <div className="aspect-[3/4] bg-white rounded-lg shadow-sm border"></div>
+            {/* <div className="aspect-[3/4] bg-white rounded-lg shadow-sm border">{file.preview}</div> */}
+            <iframe src={file.preview} alt={file.preview} className='aspect-[3/4] rounded-lg shadow-sm border w-full' />
           </div>
         </div>
       </DialogContent>

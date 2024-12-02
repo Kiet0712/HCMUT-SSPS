@@ -29,7 +29,7 @@ export default function ChoosePrinter() {
 
   return (
     <div className="p-6 bg-secondary">
-      <h1 className="text-center text-2xl font-bold mb-6">Choose a Printer</h1>
+      <h1 className="text-center text-4xl font-bold mb-6">Choose a Printer</h1>
       <div className="grid grid-cols-3 gap-6">
         {printers.map((printer) => (
           <Card key={printer.id} className={cn("border", printer.id == selectedPrinter ? "bg-blue-50" : "bg-white")} onClick={() => handleSelectPrinter(printer.id)}>

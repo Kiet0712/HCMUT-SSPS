@@ -51,11 +51,12 @@ const money_per_page = 1000;
 export default function HistoryPage() {
   return (
     <div className="container mx-auto py-6">
-      <Card className="m-4 pt-4 pb-8">
+      <Card className="m-4 p-4">
         <CardHeader>
-          <CardTitle className="text-2xl font-bold">Printing Log</CardTitle>
+          <CardTitle className="text-2xl font-bold">Printing Pages Payment</CardTitle>
         </CardHeader>
         <CardContent>
+            <div className="flex justify-end mb-4 mr-8 text-muted-foreground">Number of pages remained: {pages_remained}</div>
           <Table className="text-md">
             <TableHeader>
               <TableRow>
@@ -81,6 +82,19 @@ export default function HistoryPage() {
             </TableBody>
           </Table>
         </CardContent>
+        <CardFooter>
+            <div className="w-full flex flex-col items-center">
+            <p className="text-center m-4 text-muted-foreground">Number of pages you must buy: {n_pages}</p>
+            <div className="bg-blue-100 border-t border-b border-blue-500 text-blue-700 px-4 py-3 mb-4" role="alert">
+            <p className="text-center"><span className="font-bold">Total price:</span> {(n_pages * money_per_page).toLocaleString()} VND</p>
+            </div>
+            
+            <Button className="bg-blue-700 p-2 m-4">
+                Buy Pages
+            </Button>
+            </div>
+           
+        </CardFooter>
       </Card>
     </div>
   )

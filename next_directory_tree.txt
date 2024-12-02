@@ -1,0 +1,25 @@
+(root)
+├── (auth)                      # Authentication-related pages
+│   ├── sign-in
+│   │   └── [[...sign-in]]
+│   │       └── page.tsx        # Sign-in form
+│   └── sign-up
+│       └── [[...sign-up]]
+│           └── page.tsx        # Sign-up form
+│
+└── (main)                      # Main application pages
+    ├── home
+    │   └── page.tsx            # Home page
+    ├── print
+    │   └── page.tsx            # Print service page
+    ├── history
+    │   └── page.tsx            # Printing history page
+    ├── blog
+    │   ├── [blogId]
+    │   │   └── page.tsx        # Individual blog details
+    │   └── page.tsx            # Blog list page
+    ├── contact
+    │   └── page.tsx            # Contact page
+    └── profile
+        └── [userId]
+            └── page.tsx        # User profile page

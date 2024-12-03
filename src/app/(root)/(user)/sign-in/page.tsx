@@ -97,7 +97,7 @@ export default function LoginPage() {
                             </Link>
                         </div>
 
-                        <Link href="/admin/home">
+                        <Link href="/home">
                         <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-500 my-4">
                                 Login
                             </Button>

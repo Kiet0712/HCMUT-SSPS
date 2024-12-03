@@ -6,12 +6,14 @@ export const AxiosInstance = axios.create({
 
 AxiosInstance.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem("token") as string;
-    const accessToken = JSON.parse(token);
+    const token = localStorage.getItem("access_token") as string;
 
     // If token is present, add it to request's Authorization Header
     if (token) {
-      if (config.headers) config.headers.token = accessToken;
+      const accessToken = JSON.parse(token);
+      if (config.headers) {
+        config.headers.Authorization = `Bearer ${accessToken}`;
+      }
     }
     return config;
   },

@@ -1,4 +1,4 @@
-export interface PrinterHistorySettings {
+export interface PrinterHistory {
     time: string,
     fileName: string,
     copies: number,
@@ -9,6 +9,6 @@ export interface PrinterHistorySettings {
 export interface PrinterDialogProps {
   isOpen: boolean
   onClose: () => void
-  printer: PrinterHistorySettings
+  printer: PrinterHistory[]
 }
   

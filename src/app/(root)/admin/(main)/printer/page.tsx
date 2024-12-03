@@ -1,7 +1,7 @@
 'use client'
 
 import { GraduationCap } from 'lucide-react'
-import { PrinterHistorySettings } from '@/app/types/printer'
+import { PrinterHistory } from '@/app/types/printer'
 import build from 'next/dist/build'
 import { useState } from 'react'
 import PrinterDialog from '@/components/printer-dialog'
@@ -12,24 +12,40 @@ interface Printer {
     building: string,
     site: string,
     state: string,
-    history: PrinterHistorySettings
+    history: PrinterHistory[]
 }
 
 
-const printers = [
+const printers: Printer[] = [
     {
         id: 1,
         name: "H1-1",
         building: "H1",
         site: "Campus 2",
         state: "Available",
-        history: {
-            time: "2021-10-10 10:10:10",
-            fileName: "YOLOv10.pdf",
-            copies: "1",
-            pages: "10",
-            studentId: "1812700"
-        }
+        history: [
+            {
+                time: "2021-10-10 10:10:10",
+                fileName: "YOLOv10.pdf",
+                copies: 1,
+                pages: 10,
+                studentId: "1812700"
+            },
+            {
+                time: "2024-12-03 11:00 AM",
+                fileName: "ThesisChapter.pdf",
+                copies: 1,
+                pages: 30,
+                studentId: "2213568"
+            },
+            {
+                time: "2024-12-03 11:15 AM",
+                fileName: "Invoice.xlsx",
+                copies: 5,
+                pages: 2,
+                studentId: "2211334"
+            }
+        ]
     },
 
     {
@@ -38,13 +54,15 @@ const printers = [
         building: "H1",
         site: "Campus 2",
         state: "Not available",
-        history: {
-            time: "2021-9-9 9:9:9",
-            fileName: "Mamba.pdf",
-            copies: "2",
-            pages: "30",
-            studentId: "2213456"
-        }
+        history: [
+            {
+                time: "2021-9-9 9:9:9",
+                fileName: "Mamba.pdf",
+                copies: 1,
+                pages: 30,
+                studentId: "2213456"
+            }
+        ]
     },
 
     {
@@ -53,13 +71,15 @@ const printers = [
         building: "H6",
         site: "Campus 2",
         state: "Available",
-        history: {
-            time: "2021-9-9 9:9:9",
-            fileName: "Mamba.pdf",
-            copies: "2",
-            pages: "30",
-            studentId: "2213456"
-        }
+        history: [
+            {
+                time: "2021-9-9 9:9:9",
+                fileName: "Mamba.pdf",
+                copies: 1,
+                pages: 30,
+                studentId: "2213456"
+            }
+        ]
     },
 
     {
@@ -68,19 +88,22 @@ const printers = [
         building: "B4",
         site: "Campus 1",
         state: "Available",
-        history: {
-            time: "2021-9-9 9:9:9",
-            fileName: "Mamba.pdf",
-            copies: "2",
-            pages: "30",
-            studentId: "2213456"
-        }
+        history: [
+            {
+                time: "2021-9-9 9:9:9",
+                fileName: "Mamba.pdf",
+                copies: 2,
+                pages: 20,
+                studentId: "2213456"
+            }
+        ]
     }
 ]
 
 export default function StudentHistoryPage() {
 
-    const [ selectedPrinter, setSelectedPrinter ] = useState<Printer | null>(null)
+    const [selectedPrinter, setSelectedPrinter] = useState<Printer | null>(null)
+
     return (
         <div className="max-w m-auto">
             <div className="border rounded-lg shadow-sm p-6">
@@ -138,14 +161,14 @@ export default function StudentHistoryPage() {
                         <tbody className="bg-white divide-y divide-gray-200">
 
                             {printers.map((printer) => (
-                                <tr>
+                                <tr onClick={() => setSelectedPrinter(printer)} key={printer.id}>
                                     <td className="px-6 py-4 whitespace-nowrap text-sm">{printer.id}</td>
                                     <td className="px-6 py-4 whitespace-nowrap text-sm">{printer.name}</td>
                                     <td className="px-6 py-4 whitespace-nowrap text-sm">{printer.building}</td>
                                     <td className="px-6 py-4 whitespace-nowrap text-sm">{printer.site}</td>
                                     {(printer.state === "Available") ?
-                                    (<td className="px-6 py-4 whitespace-nowrap text-sm text-green-600">{printer.state}</td>) :
-                                    (<td className="px-6 py-4 whitespace-nowrap text-sm text-red-600">{printer.state}</td>)}
+                                        (<td className="px-6 py-4 whitespace-nowrap text-sm text-green-600">{printer.state}</td>) :
+                                        (<td className="px-6 py-4 whitespace-nowrap text-sm text-red-600">{printer.state}</td>)}
                                 </tr>
                             )
                             )}
@@ -156,7 +179,10 @@ export default function StudentHistoryPage() {
                 </div>
             </div>
             {selectedPrinter && (
-                <PrinterDialog />
+                <PrinterDialog
+                    isOpen={true}
+                    onClose={() => setSelectedPrinter(null)}
+                    printer={selectedPrinter.history} />
             )
             }
         </div>

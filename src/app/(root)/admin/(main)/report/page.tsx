@@ -9,7 +9,7 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContaine
 const sampleData = {
     totalPages: 15000,
     totalDocuments: 3500,
-    totalCost: 750, // in dollars
+    totalCost: 500000, // in VND
     topStudents: [
         { id: '2213568', name: 'Đặng Ngọc Bảo Trâm', pagesPrinted: 500 },
         { id: '2212345', name: 'Đặng Vũ Tuấn Kiệt', pagesPrinted: 450 },
@@ -30,14 +30,6 @@ const sampleData = {
         { day: '30', pages: 550 },
     ],
 }
-
-const chartSetting = {
-    yAxis: [
-        {
-            label: 'rainfall (mm)',
-        },
-    ]
-};
 
 export default function MonthlyReportPage() {
     const [currentMonth, setCurrentMonth] = useState('')
@@ -67,8 +59,8 @@ export default function MonthlyReportPage() {
                                 <dd className="text-2xl font-semibold">{sampleData.totalDocuments.toLocaleString()}</dd>
                             </div>
                             <div className="col-span-2">
-                                <dt className="text-sm font-medium text-gray-500">Total Cost</dt>
-                                <dd className="text-2xl font-semibold">${sampleData.totalCost.toLocaleString()}</dd>
+                                <dt className="text-sm font-medium text-gray-500">Total Cost for buying Pages</dt>
+                                <dd className="text-2xl font-semibold">{sampleData.totalCost.toLocaleString()} VND</dd>
                             </div>
                         </dl>
                     </CardContent>

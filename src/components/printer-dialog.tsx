@@ -77,31 +77,31 @@ export default function PrinterDialog({ isOpen, onClose, printer } : PrinterDial
             <thead className="bg-gray-50">
               <tr>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Student Name
+                  Time
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  StudentID
+                  File Name
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Faculty
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  #Documents
+                  #Copies
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   #Pages
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Student ID
                 </th>
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
 
-              {printerHistories.map((histories) => (
-                <tr>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm">{student.studentId}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm">{student.studentName}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm">{student.faculty}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm">{student.documents}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm">{student.pages}</td>
+              {printer.map((history) => (
+                <tr key={history.time}>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm">{history.time}</td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm">{history.fileName}</td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm">{history.copies}</td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm">{history.pages}</td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm">{history.studentId}</td>
                 </tr>
               )
               )}

@@ -10,5 +10,6 @@ export interface PrinterDialogProps {
   isOpen: boolean
   onClose: () => void
   printer: PrinterHistory[]
+  printerName: string
 }
   

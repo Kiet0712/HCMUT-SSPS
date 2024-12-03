@@ -11,7 +11,7 @@ import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Checkbox } from "@/components/ui/checkbox"
-import { PrinterHistorySettings, PrinterDialogProps } from '@/app/types/printer'
+import { PrinterHistory, PrinterDialogProps } from '@/app/types/printer'
 import { Printer } from "lucide-react"
 import {
   Select,
@@ -21,7 +21,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 
-export default function PrinterDialog({ isOpen, onClose, printer } : PrinterDialogProps) {
+export default function PrinterDialog({ isOpen, onClose, printer, printerName } : PrinterDialogProps) {
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
@@ -33,43 +33,7 @@ export default function PrinterDialog({ isOpen, onClose, printer } : PrinterDial
         <div className="border rounded-lg shadow-sm p-6">
         <div className="flex items-center mb-6">
           <Printer className="w-6 h-6 mr-2" />
-          <h1 className="text-2xl font-semibold">Printer {}</h1>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-          <div>
-            <label htmlFor="studentId" className="block text-sm font-medium text-gray-700 mb-1">
-              StudentID
-            </label>
-            <input
-              type="text"
-              id="studentId"
-              placeholder="Enter student ID"
-              className="w-full px-3 py-2 border rounded-md"
-            />
-          </div>
-          <div>
-            <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
-              Name
-            </label>
-            <input
-              type="text"
-              id="name"
-              placeholder="Enter name"
-              className="w-full px-3 py-2 border rounded-md"
-            />
-          </div>
-          <div>
-            <label htmlFor="faculty" className="block text-sm font-medium text-gray-700 mb-1">
-              Faculty
-            </label>
-            <input
-              type="text"
-              id="faculty"
-              placeholder="Enter faculty"
-              className="w-full px-3 py-2 border rounded-md"
-            />
-          </div>
+          <h1 className="text-2xl font-semibold">Printer {printerName}</h1>
         </div>
 
         <div className="overflow-x-auto">
@@ -105,8 +69,6 @@ export default function PrinterDialog({ isOpen, onClose, printer } : PrinterDial
                 </tr>
               )
               )}
-
-
             </tbody>
           </table>
         </div>

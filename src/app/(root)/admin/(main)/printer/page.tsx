@@ -1,6 +1,6 @@
 'use client'
 
-import { GraduationCap } from 'lucide-react'
+import { Printer } from 'lucide-react'
 import { PrinterHistory } from '@/app/types/printer'
 import build from 'next/dist/build'
 import { useState } from 'react'
@@ -108,7 +108,7 @@ export default function StudentHistoryPage() {
         <div className="max-w m-auto">
             <div className="border rounded-lg shadow-sm p-6">
                 <div className="flex items-center mb-6">
-                    <GraduationCap className="w-6 h-6 mr-2" />
+                    <Printer className="w-6 h-6 mr-2" />
                     <h1 className="text-2xl font-semibold">Printer</h1>
                 </div>
 
@@ -182,7 +182,8 @@ export default function StudentHistoryPage() {
                 <PrinterDialog
                     isOpen={true}
                     onClose={() => setSelectedPrinter(null)}
-                    printer={selectedPrinter.history} />
+                    printer={selectedPrinter.history} 
+                    printerName={selectedPrinter.name}/>
             )
             }
         </div>

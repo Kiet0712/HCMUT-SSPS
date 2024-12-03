@@ -12,5 +12,5 @@ export interface PrintSettings {
 export interface PrintDialogProps {
   isOpen: boolean
   onClose: () => void
-  file: File & { id: string }
+  file: File & { id: string, preview?: string }
 }

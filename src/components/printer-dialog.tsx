@@ -1,38 +1,39 @@
-import { GraduationCap } from 'lucide-react'
+'use client'
 
-const students = [
-  {
-    studentName: 'Đặng Ngọc Bảo Trâm',
-    studentId: '2213568',
-    faculty: 'Computer Science and Engineering',
-    documents: 3,
-    pages: 15
-  },
+import { useState } from 'react'
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog"
+import { Label } from "@/components/ui/label"
+import { Input } from "@/components/ui/input"
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
+import { Checkbox } from "@/components/ui/checkbox"
+import { PrinterHistorySettings, PrinterDialogProps } from '@/app/types/printer'
+import { Printer } from "lucide-react"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 
-  {
-    studentName: 'Đặng Vũ Tuấn Kiệt',
-    studentId: '2213456',
-    faculty: 'Electrical Engineering',
-    documents: 2,
-    pages: 10
-  },
+export default function PrinterDialog({ isOpen, onClose, printer } : PrinterDialogProps) {
 
-  {
-    studentName: 'Bùi Trọng Văn',
-    studentId: '2213568',
-    faculty: 'Chemical Engineering',
-    documents: 1,
-    pages: 5
-  }
-]
-
-export default function StudentHistoryPage() {
   return (
-    <div className="max-w m-auto p-6">
-      <div className="border rounded-lg shadow-sm p-6">
+    <Dialog open={isOpen} onOpenChange={onClose}>
+      <DialogContent className="max-w-4xl">
+        <DialogHeader>
+          <DialogTitle>Document</DialogTitle>
+        </DialogHeader>
+
+        <div className="border rounded-lg shadow-sm p-6">
         <div className="flex items-center mb-6">
-          <GraduationCap className="w-6 h-6 mr-2" />
-          <h1 className="text-2xl font-semibold">Student</h1>
+          <Printer className="w-6 h-6 mr-2" />
+          <h1 className="text-2xl font-semibold">Printer {}</h1>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
@@ -94,7 +95,7 @@ export default function StudentHistoryPage() {
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
 
-              {students.map((student) => (
+              {printerHistories.map((histories) => (
                 <tr>
                   <td className="px-6 py-4 whitespace-nowrap text-sm">{student.studentId}</td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm">{student.studentName}</td>
@@ -110,7 +111,7 @@ export default function StudentHistoryPage() {
           </table>
         </div>
       </div>
-    </div>
+      </DialogContent>
+    </Dialog>
   )
 }
-

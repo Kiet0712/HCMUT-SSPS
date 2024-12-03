@@ -3,8 +3,9 @@
 import { Printer } from 'lucide-react'
 import { PrinterHistory } from '@/app/types/printer'
 import build from 'next/dist/build'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import PrinterDialog from '@/components/printer-dialog'
+import { AxiosInstance } from '@/utils/axiosInstance'
 
 interface Printer {
     id: number,
@@ -104,6 +105,18 @@ export default function StudentHistoryPage() {
 
     const [selectedPrinter, setSelectedPrinter] = useState<Printer | null>(null)
 
+    useEffect(() => {
+        AxiosInstance.get("/print/getprinters")
+        .then((res) => {
+            console.log(res.data);
+        })
+        .catch((err) => {
+            console.log(err);
+            //need to show error here
+        });
+    }, [])
+
+
     return (
         <div className="max-w m-auto">
             <div className="border rounded-lg shadow-sm p-6">
@@ -182,8 +195,8 @@ export default function StudentHistoryPage() {
                 <PrinterDialog
                     isOpen={true}
                     onClose={() => setSelectedPrinter(null)}
-                    printer={selectedPrinter.history} 
-                    printerName={selectedPrinter.name}/>
+                    printer={selectedPrinter.history}
+                    printerName={selectedPrinter.name} />
             )
             }
         </div>

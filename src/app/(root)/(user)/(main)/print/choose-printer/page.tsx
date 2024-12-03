@@ -8,7 +8,8 @@ import { Button } from "@/components/ui/button";
 import { Printer } from 'lucide-react';
 import { useState } from 'react';
 import { cn } from '@/lib/utils';
-import axios from 'axios';
+// import { axiosInstance } from '@/utils/axios';
+import { AxiosInstance } from '@/utils/axiosInstance';
 
 const page_per_printer = 100;
 const printers = [
@@ -25,7 +26,7 @@ export default function ChoosePrinter() {
 
   const getPrinters = async () => {
     try {
-      const response = await axios.get('');
+      const response = await AxiosInstance.get('/print/getprinters');  // Fetching data
       console.log('Data:', response.data);  // Handling the response
     } catch (error) {
       console.error('Error fetching data:', error);  // Handling errors

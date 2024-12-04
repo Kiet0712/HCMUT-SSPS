@@ -24,8 +24,9 @@ export default function Signin() {
       .then((res) => {
         console.log(res.data);
         const token = res.data.token as string;
+        console.log(token);
         localStorage.setItem("access_token", JSON.stringify(token));
-        window.location.href = "/home";
+        window.location.href = "/admin/home";
       })
       .catch((err) => {
         console.log(err);
@@ -112,14 +113,14 @@ export default function Signin() {
               </Link>
             </div>
 
-            <Link href="/admin/home">
-              <Button
-                type="submit"
-                className="w-full bg-blue-600 hover:bg-blue-500 my-4"
-              >
-                Login
-              </Button>
-            </Link>
+            {/* <Link href="/admin/home"> */}
+            <Button
+              type="submit"
+              className="w-full bg-blue-600 hover:bg-blue-500 my-4"
+            >
+              Login
+            </Button>
+            {/* </Link> */}
           </form>
         </CardContent>
       </Card>

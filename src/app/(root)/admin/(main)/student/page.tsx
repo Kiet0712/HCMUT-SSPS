@@ -1,32 +1,50 @@
+'use client'
+
+import { AxiosInstance } from '@/utils/axiosInstance'
 import { GraduationCap } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { set } from 'react-hook-form'
 
-const students = [
-  {
-    studentName: 'Đặng Ngọc Bảo Trâm',
-    studentId: '2213568',
-    faculty: 'Computer Science and Engineering',
-    documents: 3,
-    pages: 15
-  },
+// const students = [
+//   {
+//     studentName: 'Đặng Ngọc Bảo Trâm',
+//     studentId: '2213568',
+//     faculty: 'Computer Science and Engineering',
+//     documents: 3,
+//     pages: 15
+//   },
 
-  {
-    studentName: 'Đặng Vũ Tuấn Kiệt',
-    studentId: '2213456',
-    faculty: 'Electrical Engineering',
-    documents: 2,
-    pages: 10
-  },
+//   {
+//     studentName: 'Đặng Vũ Tuấn Kiệt',
+//     studentId: '2213456',
+//     faculty: 'Electrical Engineering',
+//     documents: 2,
+//     pages: 10
+//   },
 
-  {
-    studentName: 'Bùi Trọng Văn',
-    studentId: '2213568',
-    faculty: 'Chemical Engineering',
-    documents: 1,
-    pages: 5
-  }
-]
+//   {
+//     studentName: 'Bùi Trọng Văn',
+//     studentId: '2213568',
+//     faculty: 'Chemical Engineering',
+//     documents: 1,
+//     pages: 5
+//   }
+// ]
 
 export default function StudentHistoryPage() {
+  const [histories, setHistories] = useState([])
+
+  useEffect(() => {
+    AxiosInstance.get("/admin/history")
+            .then((res) => {
+                console.log(res.data);
+                setHistories(res.data.history);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+  },[])
+
   return (
     <div className="max-w m-auto p-6">
       <div className="border rounded-lg shadow-sm p-6">
@@ -94,7 +112,7 @@ export default function StudentHistoryPage() {
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
 
-              {students.map((student) => (
+              {/* {students.map((student) => (
                 <tr>
                   <td className="px-6 py-4 whitespace-nowrap text-sm">{student.studentId}</td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm">{student.studentName}</td>
@@ -103,7 +121,7 @@ export default function StudentHistoryPage() {
                   <td className="px-6 py-4 whitespace-nowrap text-sm">{student.pages}</td>
                 </tr>
               )
-              )}
+              )} */}
 
 
             </tbody>

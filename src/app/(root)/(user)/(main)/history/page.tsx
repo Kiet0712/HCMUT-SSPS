@@ -1,4 +1,12 @@
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+"use client";
+
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import {
   Table,
   TableBody,
@@ -6,17 +14,19 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table"
+} from "@/components/ui/table";
 
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
+import { useEffect, useState } from "react";
+import { AxiosInstance } from "@/utils/axiosInstance";
 
 interface PrintHistory {
-  time: string
-  fileName: string
-  fileSize: string
-  copies: number
-  printer: string
-  pages: number
+  time: string;
+  fileName: string;
+  fileSize: string;
+  copies: number;
+  printer: string;
+  pages: number;
 }
 
 const printHistory: PrintHistory[] = [
@@ -26,7 +36,7 @@ const printHistory: PrintHistory[] = [
     fileSize: "2.3MB",
     copies: 1,
     printer: "H6-1",
-    pages: 10
+    pages: 10,
   },
   {
     time: "2024-02-12 14:15",
@@ -34,21 +44,34 @@ const printHistory: PrintHistory[] = [
     fileSize: "3.5MB",
     copies: 2,
     printer: "H6-1",
-    pages: 20
+    pages: 20,
   },
-]
+];
 
 const pages_remained = 10;
 
 let n_pages = 0;
 
 for (let doc of printHistory) {
-    n_pages += doc.pages;
+  n_pages += doc.pages;
 }
 
 const money_per_page = 1000;
 
 export default function HistoryPage() {
+  const { history, setHistory } = useState([] as PrintHistory[]);
+
+  useEffect(() => {
+    AxiosInstance.get("/users/history")
+      .then((res) => {
+        console.log(res.data);
+        setHistory(res.data.history);
+        console.log(history);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [setHistory]);
   return (
     <div className="container mx-auto py-6">
       <Card className="m-4 pt-4 pb-8">
@@ -83,5 +106,5 @@ export default function HistoryPage() {
         </CardContent>
       </Card>
     </div>
-  )
+  );
 }

@@ -1,3 +1,4 @@
+//@ts-nocheck
 'use client'
 
 import { Printer } from 'lucide-react'
@@ -24,8 +25,8 @@ interface Printer {
     id: number,
     name: string,
     building: string,
-    site: string,
-    state: string,
+    campsite: string,
+    status: string,
 }
 
 
@@ -115,26 +116,20 @@ interface Printer {
 
 export default function StudentHistoryPage() {
 
-    const [printers, setPrinters] = useState<Printer[]>([])
+    const [printers, setPrinters] = useState<Printer[]>([]);
 
-    const [selectedPrinter, setSelectedPrinter] = useState<Printer | null>(null)
+    const [selectedPrinter, setSelectedPrinter] = useState<Printer[]>([]);
+    const [selectedEditPrinter, setSelectedEditPrinter] = useState<Printer[]>([]);
 
     const [isAddDialogOpen, setIsAddDialogOpen] = useState(false)
     const [isEditDialogOpen, setIsEditDialogOpen] = useState(false)
 
     const handleAdd = async (data) => {
         console.log(data);
-        const newPrinter = {
-            name: data.name as string,
-            building: data.building as string,
-            campsite: data.site as string,
-            status: data.state as 'Available' | 'Not available',
-        }
-        console.log(newPrinter);
         try {
-            const response = await AxiosInstance.post('/admin/addprinter', newPrinter);
-            console.log('User added:', response.data);
-            alert('User added successfully!');
+            const response = await AxiosInstance.post('/admin/addprinter', data);
+            console.log('Printer added:', response.data);
+            alert('Printer added successfully!');
         } catch (error) {
             console.error('Error adding user:', error);
             alert('An error occurred. Please try again.');
@@ -144,16 +139,34 @@ export default function StudentHistoryPage() {
         setIsAddDialogOpen(false)
     }
 
-    const handleEdit = (formData: FormData) => {
-        if (!selectedPrinter) return
-        const updatedPrinter = {
-            id: selectedPrinter.id,
-            name: formData.get('name') as string,
-            building: formData.get('building') as string,
-            site: formData.get('site') as string,
-            state: formData.get('state') as 'Available' | 'Not available',
+    const handleEdit = async (data) => {
+        console.log("data", data)
+        const newPrinter = {
+            id: selectedEditPrinter.id,
+            name: data.name,
+            building: data.building,
+            campsite: data.campsite,
+            status: data.status
         }
-        // send data to backend
+        console.log(data);
+        AxiosInstance.patch('/admin/updateprinter', newPrinter).then((res) => {
+            console.log('Printer updated:', res.data);
+            alert('Printer updated successfully!');
+            window.location.reload();
+        })
+        .catch((err) => {
+            console.error('Error updating printer:', err);
+            alert('An error occurred. Please try again.');
+        });
+
+        // try {
+        //     const response = await AxiosInstance.patch('/admin/updateprinter', newPrinter);
+        //     console.log('User added:', response.data);
+        //     alert('User added successfully!');
+        // } catch (error) {
+        //     console.error('Error adding user:', error);
+        //     alert('An error occurred. Please try again.');
+        // }
 
         setIsEditDialogOpen(false)
         setSelectedPrinter(null)
@@ -163,8 +176,7 @@ export default function StudentHistoryPage() {
         if (confirm('Are you sure you want to delete this printer?')) {
             // send delete request to backend
         }
-    }
-
+    } 
 
     useEffect(() => {
         AxiosInstance.get("/print/getprinters")
@@ -177,7 +189,7 @@ export default function StudentHistoryPage() {
             });
     }, [])
 
-    const { register, handleSubmit } = useForm()
+    const { register, handleSubmit } = useForm();
 
     return (
         <div className="max-w m-auto">
@@ -231,7 +243,7 @@ export default function StudentHistoryPage() {
                                 </div>
                                 <div className="space-y-2">
                                     <Label htmlFor="add-site">Site</Label>
-                                    <Input id="add-site" required {...register('site')} />
+                                    <Input id="add-site" required {...register('campsite')} />
                                 </div>
                                 <div className="space-y-2">
                                     <Label htmlFor="add-status">Status</Label>
@@ -244,9 +256,9 @@ export default function StudentHistoryPage() {
                                             <SelectItem value="Not available">Not available</SelectItem>
                                         </SelectContent>
                                     </Select> */}
-                                    <select {...register("state")}>
+                                    <select className='class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5' {...register("status")}>
                                         <option value="AVAILABLE">Available</option>
-                                        <option value="UNAVAILABLE">Unavailable</option>
+                                        <option value="NOT_AVAILABLE">NOT_AVAILABLE</option>
                                     </select>
                                 </div>
                                 <Button type="submit" className="w-full">Add Printer</Button>
@@ -298,7 +310,11 @@ export default function StudentHistoryPage() {
                                                     <Button
                                                         variant="outline"
                                                         size="sm"
-                                                        onClick={() => setSelectedPrinter(printer)}
+                                                        onClick={() => {
+                                                            console.log(printer)
+                                                            setSelectedEditPrinter(printer)
+                                                            console.log("Button clicked")
+                                                        }}
                                                     >
                                                         Edit
                                                     </Button>
@@ -307,13 +323,14 @@ export default function StudentHistoryPage() {
                                                     <DialogHeader>
                                                         <DialogTitle>Edit Printer</DialogTitle>
                                                     </DialogHeader>
-                                                    <form action={handleEdit} className="space-y-4">
+                                                    <form onSubmit={handleSubmit(handleEdit)} className="space-y-4">
                                                         <div className="space-y-2">
                                                             <Label htmlFor="edit-name">Printer Name</Label>
                                                             <Input
                                                                 id="edit-name"
                                                                 name="name"
-                                                                defaultValue={selectedPrinter?.name}
+                                                                defaultValue={selectedEditPrinter?.name}
+                                                                {...register('name')}
                                                                 required
                                                             />
                                                         </div>
@@ -322,7 +339,8 @@ export default function StudentHistoryPage() {
                                                             <Input
                                                                 id="edit-building"
                                                                 name="building"
-                                                                defaultValue={selectedPrinter?.building}
+                                                                defaultValue={selectedEditPrinter?.building}
+                                                                {...register('building')}
                                                                 required
                                                             />
                                                         </div>
@@ -330,22 +348,30 @@ export default function StudentHistoryPage() {
                                                             <Label htmlFor="edit-site">Site</Label>
                                                             <Input
                                                                 id="edit-site"
-                                                                name="site"
-                                                                defaultValue={selectedPrinter?.site}
+                                                                name="site  "
+                                                                defaultValue={selectedEditPrinter?.campsite}
+                                                                {...register('campsite')}
                                                                 required
                                                             />
                                                         </div>
                                                         <div className="space-y-2">
                                                             <Label htmlFor="edit-status">Status</Label>
-                                                            <Select name="status" defaultValue={selectedPrinter?.status}>
+                                                            {/* <Select name="status" 
+                                                            defaultValue={selectedEditPrinter?.status}
+                                                            {...register('status')}
+                                                            >
                                                                 <SelectTrigger>
                                                                     <SelectValue placeholder="Select status" />
                                                                 </SelectTrigger>
                                                                 <SelectContent>
-                                                                    <SelectItem value="Available">Available</SelectItem>
-                                                                    <SelectItem value="Not available">Not available</SelectItem>
+                                                                    <SelectItem value="AVAILABLE">Available</SelectItem>
+                                                                    <SelectItem value="UNAVAILABLE">Unavailable</SelectItem>
                                                                 </SelectContent>
-                                                            </Select>
+                                                            </Select> */}
+                                                            <select className='class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5' {...register("status")}>
+                                                                <option value="AVAILABLE">AVAILABLE</option>
+                                                                <option value="NOT_AVAILABLE">NOT_AVAILABLE</option>
+                                                            </select>
                                                         </div>
                                                         <Button type="submit" className="w-full">Save Changes</Button>
                                                     </form>
@@ -369,14 +395,14 @@ export default function StudentHistoryPage() {
                     </table>
                 </div>
             </div >
-            {selectedPrinter && (
+            {/* {selectedPrinter && (
                 <PrinterDialog
                     isOpen={true}
                     onClose={() => setSelectedPrinter(null)}
-                    printer={selectedPrinter.history}
+                    printer={selectedPrinter}
                     printerName={selectedPrinter.name} />
             )
-            }
+            } */}
         </div >
     )
 }

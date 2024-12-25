@@ -1,3 +1,7 @@
+'use client';
+
+import { useState } from 'react'
+
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import {
   Table,
@@ -7,6 +11,9 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
 
 import { Button } from "@/components/ui/button"
 
@@ -40,15 +47,15 @@ const printHistory: PrintHistory[] = [
 
 const pages_remained = 10;
 
-let n_pages = 0;
-
-for (let doc of printHistory) {
-    n_pages += doc.pages;
-}
-
-const money_per_page = 1000;
+const money_per_page = 500;
 
 export default function HistoryPage() {
+  const [n_pages, setN_pages] = useState(0);
+
+  const handleInputChange = (e: any) => {
+    setN_pages(e.target.value);
+  };
+
   return (
     <div className="container mx-auto py-6">
       <Card className="m-4 p-4">
@@ -57,34 +64,13 @@ export default function HistoryPage() {
         </CardHeader>
         <CardContent>
             <div className="flex justify-end mb-4 mr-8 text-muted-foreground">Number of pages remained: {pages_remained}</div>
-          <Table className="text-md">
-            <TableHeader>
-              <TableRow>
-                <TableHead>Time</TableHead>
-                <TableHead>FileName</TableHead>
-                <TableHead className="text-center">FileSize</TableHead>
-                <TableHead className="text-center">#Copies</TableHead>
-                <TableHead className="text-center">Printer</TableHead>
-                <TableHead className="text-center">#Pages</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {printHistory.map((item, index) => (
-                <TableRow key={index}>
-                  <TableCell className="font-mono">{item.time}</TableCell>
-                  <TableCell>{item.fileName}</TableCell>
-                  <TableCell className="text-center">{item.fileSize}</TableCell>
-                  <TableCell className="text-center">{item.copies}</TableCell>
-                  <TableCell className="text-center">{item.printer}</TableCell>
-                  <TableCell className="text-center">{item.pages}</TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+            <div className="flex flex-row items-center justify-center">
+              <Label className="m-4 text-md">Number of pages you want to buy:</Label>
+              <Input className="m-4 w-32" type="number" name="n_pages" id="n_pages" onChange={handleInputChange} min={10} step={10}/>
+            </div>
         </CardContent>
         <CardFooter>
             <div className="w-full flex flex-col items-center">
-            <p className="text-center m-4 text-muted-foreground">Number of pages you must buy: {n_pages}</p>
             <div className="bg-blue-100 border-t border-b border-blue-500 text-blue-700 px-4 py-3 mb-4" role="alert">
             <p className="text-center"><span className="font-bold">Total price:</span> {(n_pages * money_per_page).toLocaleString()} VND</p>
             </div>

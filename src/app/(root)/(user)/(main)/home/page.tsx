@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button"
 import { SidebarInset, SidebarTrigger } from "@/components/ui/sidebar"
 import Image from 'next/image'
+import Link from 'next/link'
 // import img from '@/components/images/sanbong.jpeg'
 
 export default function Home() {
@@ -13,9 +14,11 @@ export default function Home() {
                         <p className="mt-4 text-lg text-muted-foreground text-slate-200">
                             Student Smart Printing System
                         </p>
-                        <Button size="lg" className="mt-8 bg-blue-700">
-                            Print
-                        </Button>
+                        <Link href="/print/choose-printer">
+                            <Button size="lg" className="mt-8 bg-blue-700">
+                                Print
+                            </Button>
+                        </Link>
                     </div>
                 </div>
             </main>

@@ -43,5 +43,5 @@
     "tailwindcss": "^3.4.1",
     "typescript": "^5"
   },
-  "proxy": "http://3.82.133.50:4000"
+  "proxy": "http://103.82.133.50:4000"
 }

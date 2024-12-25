@@ -34,9 +34,9 @@ const navigation = [
 		href: "/history",
 	},
 	{
-		title: "Logout",
+		title: "Log out",
 		icon: LogOut,
-		href: "/sign-in",
+		href: "/",
 	},
 ]
 

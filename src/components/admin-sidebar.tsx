@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { SlidersHorizontal, Printer, GraduationCap, NotepadText } from 'lucide-react'
+import { SlidersHorizontal, Printer, GraduationCap, NotepadText, LogOut } from 'lucide-react'
 import Image from "next/image"
 import Link from "next/link"
 
@@ -38,6 +38,11 @@ const navigation = [
     icon: NotepadText,
     href: "/admin/report",
   },
+  {
+    title: "Log out",
+		icon: LogOut,
+		href: "/",
+  }
 ]
 
 export function AppSidebar() {

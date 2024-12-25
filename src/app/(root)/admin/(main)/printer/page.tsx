@@ -173,9 +173,15 @@ export default function StudentHistoryPage() {
     }
 
     const handleDelete = (id: number) => {
-        if (confirm('Are you sure you want to delete this printer?')) {
-            // send delete request to backend
-        }
+        AxiosInstance.delete(`/admin/deleteprinter/${id}`).then((res) => {
+            console.log('Printer deleted:', res.data);
+            alert('Printer deleted successfully!');
+            window.location.reload();
+        })
+        .catch((err) => {
+            console.error('Error deleting printer:', err);
+            alert('An error occurred. Please try again.');
+        });
     } 
 
     useEffect(() => {

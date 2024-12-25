@@ -23,12 +23,14 @@ export default function Signin() {
     AxiosInstance.post("/auth/signin", { email, password })
       .then((res) => {
         console.log(res.data);
+        if (res.data.userRole == "STUDENT") throw Error("Not an admin");
         const token = res.data.token as string;
         console.log(token);
         localStorage.setItem("access_token", JSON.stringify(token));
         window.location.href = "/admin/home";
       })
       .catch((err) => {
+        window.alert("Invalid credential");
         console.log(err);
         //need to show error here
       });

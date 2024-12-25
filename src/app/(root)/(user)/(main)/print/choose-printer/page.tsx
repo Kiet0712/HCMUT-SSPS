@@ -26,6 +26,9 @@ const page_per_printer = 100;
 //   { id: "H6-3", requests: 1, pagesLeft: 95, inkLeft: 85 },
 // ];
 
+const removeUnavailablePrinters = (printers) => {
+  return printers.filter(printer => printer.status === 'AVAILABLE');
+}
 export default function ChoosePrinter() {
   const [selectedPrinter, setSelectedPrinter] = useState(0);
   const [printers, setPrinters] = useState([]);
@@ -41,7 +44,10 @@ export default function ChoosePrinter() {
   useEffect(() => {
     AxiosInstance.get("/print/getprinters")
       .then((res) => {
-        setPrinters(res.data.printers);
+        const filtedPrinter = removeUnavailablePrinters(res.data.printers);
+        setPrinters(filtedPrinter);
+        // console.log(filtedPrinter);
+        // setPrinters(res.data.printers);
       })
       .catch((err) => {
         console.log(err);
@@ -59,6 +65,7 @@ export default function ChoosePrinter() {
       <h1 className="text-center text-4xl font-bold mb-6">Choose a Printer</h1>
       <div className="grid grid-cols-3 gap-6">
         {printers.map((printer, key) => (
+          // {printer.status == "AVAILABLE"} help me remove printer without status == available
           <Card
             key={key}
             className={cn(

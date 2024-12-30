@@ -154,10 +154,10 @@ export default function StudentHistoryPage() {
             alert('Printer updated successfully!');
             window.location.reload();
         })
-        .catch((err) => {
-            console.error('Error updating printer:', err);
-            alert('An error occurred. Please try again.');
-        });
+            .catch((err) => {
+                console.error('Error updating printer:', err);
+                alert('An error occurred. Please try again.');
+            });
 
         // try {
         //     const response = await AxiosInstance.patch('/admin/updateprinter', newPrinter);
@@ -178,11 +178,11 @@ export default function StudentHistoryPage() {
             alert('Printer deleted successfully!');
             window.location.reload();
         })
-        .catch((err) => {
-            console.error('Error deleting printer:', err);
-            alert('An error occurred. Please try again.');
-        });
-    } 
+            .catch((err) => {
+                console.error('Error deleting printer:', err);
+                alert('An error occurred. Please try again.');
+            });
+    }
 
     useEffect(() => {
         AxiosInstance.get("/print/getprinters")
@@ -199,36 +199,12 @@ export default function StudentHistoryPage() {
 
     return (
         <div className="max-w m-auto">
-            <div className="border rounded-lg shadow-sm p-6">
+            <div className="border rounded-lg shadow-sm p-6 mt-4">
                 <div className="flex items-center mb-6">
                     <Printer className="w-6 h-6 mr-2" />
                     <h1 className="text-2xl font-semibold">Printer</h1>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-                    <div>
-                        <label htmlFor="studentId" className="block text-sm font-medium text-gray-700 mb-1">
-                            Building
-                        </label>
-                        <input
-                            type="text"
-                            id="building"
-                            placeholder="Enter building"
-                            className="w-full px-3 py-2 border rounded-md"
-                        />
-                    </div>
-                    <div>
-                        <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
-                            Site
-                        </label>
-                        <input
-                            type="text"
-                            id="site"
-                            placeholder="Enter site"
-                            className="w-full px-3 py-2 border rounded-md"
-                        />
-                    </div>
-                </div>
                 <div className='mb-4'>
                     <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
                         <DialogTrigger asChild>
@@ -262,25 +238,52 @@ export default function StudentHistoryPage() {
                                             <SelectItem value="Not available">Not available</SelectItem>
                                         </SelectContent>
                                     </Select> */}
-                                    <select className='class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5' {...register("status")}>
-                                        <option value="AVAILABLE">Available</option>
-                                        <option value="NOT_AVAILABLE">NOT_AVAILABLE</option>
+                                    <select className='class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-gray-900 block w-full p-2.5' {...register("status")}>
+                                        <option className="font-mono" value="AVAILABLE">Available</option>
+                                        <option className="font-mono" value="NOT_AVAILABLE">Unavailable</option>
                                     </select>
                                 </div>
-                                <Button type="submit" className="w-full">Add Printer</Button>
+                                <Button type="submit" className="w-full bg-blue-700">Add Printer</Button>
                             </form>
                         </DialogContent>
                     </Dialog>
                 </div>
 
+                <div className="flex flex-row items-end gap-4 mb-6">
+                    <div className='flex-1'>
+                        <Label htmlFor="studentId" className="block text-sm font-medium text-gray-700 mb-1">
+                            Building
+                        </Label>
+                        <Input
+                            type="text"
+                            id="building"
+                            placeholder="e.g., H1"
+                            className="w-full px-3 py-2 border rounded-md"
+                        />
+                    </div>
+                    <div className='flex-1'>
+                        <Label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+                            Site
+                        </Label>
+                        <Input
+                            type="text"
+                            id="site"
+                            placeholder="e.g., Campus 2"
+                            className="w-full px-3 py-2 border rounded-md"
+                        />
+                    </div>
+
+                    <Button className='bg-blue-700 self-end'>Filter</Button>
+
+                </div>
 
                 <div className="overflow-x-auto">
                     <table className="min-w-full divide-y divide-gray-200">
                         <thead className="bg-gray-50">
                             <tr>
-                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                {/* <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                     Printer ID
-                                </th>
+                                </th> */}
                                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                     Printer Name
                                 </th>
@@ -302,14 +305,14 @@ export default function StudentHistoryPage() {
 
                             {printers.map((printer) => (
                                 <tr onClick={() => setSelectedPrinter(printer)} key={printer.id}>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm">{printer.id}</td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm">{printer.name}</td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm">{printer.building}</td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm">{printer.campsite}</td>
+                                    {/* <td className="px-6 py-4 whitespace-nowrap text-sm">{printer.id}</td> */}
+                                    <td className="px-8 py-4 whitespace-nowrap text-sm">{printer.name}</td>
+                                    <td className="px-8 py-4 whitespace-nowrap text-sm">{printer.building}</td>
+                                    <td className="px-8 py-4 whitespace-nowrap text-sm">{printer.campsite}</td>
                                     {(printer.status === "AVAILABLE") ?
                                         (<td className="px-6 py-4 whitespace-nowrap text-sm text-green-600">{printer.status}</td>) :
-                                        (<td className="px-6 py-4 whitespace-nowrap text-sm text-red-600">{printer.status}</td>)}
-                                    <td className="text-right">
+                                        (<td className="px-6 py-4 whitespace-nowrap text-sm text-red-600">UNAVAILABLE</td>)}
+                                    <td className="px-8 py-4 text-right">
                                         <div className="flex justify-end gap-2">
                                             <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
                                                 <DialogTrigger asChild>
@@ -319,7 +322,7 @@ export default function StudentHistoryPage() {
                                                         onClick={() => {
                                                             console.log(printer)
                                                             setSelectedEditPrinter(printer)
-                                                            console.log("Button clicked")
+                                                            console.log("Button clicked", selectedEditPrinter.name)
                                                         }}
                                                     >
                                                         Edit
@@ -384,10 +387,10 @@ export default function StudentHistoryPage() {
                                                 </DialogContent>
                                             </Dialog>
                                             <Button
+                                                className="mx-1"
                                                 variant="destructive"
                                                 size="sm"
-                                                onClick={() => handleDelete(printer.id)}
-                                            >
+                                                onClick={() => handleDelete(printer.id)}>
                                                 Delete
                                             </Button>
                                         </div>

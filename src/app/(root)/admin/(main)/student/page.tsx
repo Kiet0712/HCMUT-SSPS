@@ -65,7 +65,7 @@ export default function StudentHistoryPage() {
 
 	const [id, setId] = useState('')
 	const [name, setName] = useState('')
-	const [faculty, setFaculty] = useState('')
+	const [facultyName, setFacultyName] = useState('')
 
 	const faculties = ['Computer Science and Engineering', 'Electrical Engineering', 'Chemical Engineering', 'All']
 
@@ -79,12 +79,12 @@ export default function StudentHistoryPage() {
 	}
 
 	const handleStudentFacultyChange = (value: any) => {
-		setFaculty(value)
+		setFacultyName(value)
 	}
 
 	function filter() {
 		console.log('Filtering')
-		console.log(id, name, faculty)
+		console.log(id, name, facultyName)
 
 		const filtered = mockStudents.filter((student) => {
 			if (id && !student.id.startsWith(id)) {
@@ -101,7 +101,7 @@ export default function StudentHistoryPage() {
 				return regexPattern.test(student.name)
 			}
 
-			if (faculty && faculty !== 'All' && student.faculty !== faculty) {
+			if (facultyName && facultyName !== 'All' && student.facultyName !== facultyName) {
 				return false
 			}
 			return true

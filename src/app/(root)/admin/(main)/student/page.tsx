@@ -98,7 +98,7 @@ export default function StudentHistoryPage() {
 			if (name) {
 				const regexPattern = new RegExp(`^${name.replace(/%/g, ".*").replace(/\$/g, "%$")}`, 'i')
 				console.log(regexPattern, student.name, regexPattern.test(student.name))
-				return regexPattern.test(student.name)
+				if (!regexPattern.test(student.name)) return false;
 			}
 
 			if (facultyName && facultyName !== 'All' && student.facultyName !== facultyName) {

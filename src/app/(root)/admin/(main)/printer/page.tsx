@@ -311,8 +311,8 @@ export default function StudentHistoryPage() {
                                 <SelectValue placeholder="Select status" />
                             </SelectTrigger>
                             <SelectContent>
-                                <SelectItem value="AVAILABLE">Available</SelectItem>
-                                <SelectItem value="NOT_AVAILABLE">Not available</SelectItem>
+                                <SelectItem value="AVAILABLE">AVAILABLE</SelectItem>
+                                <SelectItem value="NOT_AVAILABLE">UNAVAILABLE</SelectItem>
                             </SelectContent>
                         </Select>
                     </div>

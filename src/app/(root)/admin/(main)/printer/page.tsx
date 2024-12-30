@@ -124,12 +124,15 @@ export default function StudentHistoryPage() {
     const [isAddDialogOpen, setIsAddDialogOpen] = useState(false)
     const [isEditDialogOpen, setIsEditDialogOpen] = useState(false)
 
+    const [filteredPrinters, setFilteredPrinters] = useState<Printer[]>(printers)
+
     const handleAdd = async (data) => {
         console.log(data);
         try {
             const response = await AxiosInstance.post('/admin/addprinter', data);
             console.log('Printer added:', response.data);
             alert('Printer added successfully!');
+            updatePrinters();
         } catch (error) {
             console.error('Error adding user:', error);
             alert('An error occurred. Please try again.');
@@ -152,7 +155,8 @@ export default function StudentHistoryPage() {
         AxiosInstance.patch('/admin/updateprinter', newPrinter).then((res) => {
             console.log('Printer updated:', res.data);
             alert('Printer updated successfully!');
-            window.location.reload();
+            // window.location.reload();
+            updatePrinters();
         })
             .catch((err) => {
                 console.error('Error updating printer:', err);
@@ -176,7 +180,7 @@ export default function StudentHistoryPage() {
         AxiosInstance.delete(`/admin/deleteprinter/${id}`).then((res) => {
             console.log('Printer deleted:', res.data);
             alert('Printer deleted successfully!');
-            window.location.reload();
+            updatePrinters();
         })
             .catch((err) => {
                 console.error('Error deleting printer:', err);
@@ -184,16 +188,39 @@ export default function StudentHistoryPage() {
             });
     }
 
-    useEffect(() => {
+    function filterPrinters(building: string, site: string, status: string) {
+        const filtered = printers.filter((printer) => {
+            if (building && (!printer.building.toLowerCase().startsWith(building.toLowerCase()))) {
+                return false
+            }
+
+            if (site && !printer.campsite.toLowerCase().startsWith(site.toLowerCase())) {
+                return false
+            }
+
+            if (status && printer.status !== status) {
+                return false
+            }
+
+            return true
+        })
+
+        setFilteredPrinters(filtered)
+    }
+
+    function updatePrinters() {
         AxiosInstance.get("/print/getprinters")
             .then((res) => {
                 console.log(res.data);
                 setPrinters(res.data.printers);
+                setFilteredPrinters(res.data.printers);
             })
             .catch((err) => {
                 console.log(err);
             });
-    }, [])
+    }
+
+    useEffect(updatePrinters, [])
 
     const { register, handleSubmit } = useForm();
 
@@ -259,6 +286,7 @@ export default function StudentHistoryPage() {
                             id="building"
                             placeholder="e.g., H1"
                             className="w-full px-3 py-2 border rounded-md"
+                            onChange={(e) => filterPrinters(e.target.value, null, null)}
                         />
                     </div>
                     <div className='flex-1'>
@@ -270,10 +298,26 @@ export default function StudentHistoryPage() {
                             id="site"
                             placeholder="e.g., Campus 2"
                             className="w-full px-3 py-2 border rounded-md"
+                            onChange={(e) => filterPrinters(null, e.target.value, null)}
                         />
                     </div>
 
-                    <Button className='bg-blue-700 self-end'>Filter</Button>
+                    <div className='flex-1'>
+                        <Label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+                            Status
+                        </Label>
+                        <Select onValueChange={(value) => filterPrinters(null, null, value)}>
+                            <SelectTrigger>
+                                <SelectValue placeholder="Select status" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectItem value="AVAILABLE">Available</SelectItem>
+                                <SelectItem value="NOT_AVAILABLE">Not available</SelectItem>
+                            </SelectContent>
+                        </Select>
+                    </div>
+
+                    {/* <Button className='bg-blue-700 self-end'>Filter</Button> */}
 
                 </div>
 
@@ -303,7 +347,7 @@ export default function StudentHistoryPage() {
                         </thead>
                         <tbody className="bg-white divide-y divide-gray-200">
 
-                            {printers.map((printer) => (
+                            {filteredPrinters.map((printer) => (
                                 <tr onClick={() => setSelectedPrinter(printer)} key={printer.id}>
                                     {/* <td className="px-6 py-4 whitespace-nowrap text-sm">{printer.id}</td> */}
                                     <td className="px-8 py-4 whitespace-nowrap text-sm">{printer.name}</td>
@@ -382,7 +426,7 @@ export default function StudentHistoryPage() {
                                                                 <option value="NOT_AVAILABLE">NOT_AVAILABLE</option>
                                                             </select>
                                                         </div>
-                                                        <Button type="submit" className="w-full">Save Changes</Button>
+                                                        <Button type="submit" className="w-full bg-blue-700 text-white">Save Changes</Button>
                                                     </form>
                                                 </DialogContent>
                                             </Dialog>
